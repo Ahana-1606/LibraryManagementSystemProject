@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexLib | Premium Library Management</title>
+    <meta name="description" content="NexLib - A premium Library Management System for managing books, members, and issues.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Boxicons for Icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="glass-background"></div>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+
+    <div class="app-container glass-panel">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class='bx bx-book-reader'></i>
+                <h2>NexLib</h2>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-target="dashboard" id="nav-dashboard">
+                    <i class='bx bx-grid-alt'></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-target="books" id="nav-books">
+                    <i class='bx bx-book'></i>
+                    <span>Books</span>
+                </a>
+                <a href="#" class="nav-item" data-target="members" id="nav-members">
+                    <i class='bx bx-user'></i>
+                    <span>Members</span>
+                </a>
+                <a href="#" class="nav-item" data-target="issues" id="nav-issues">
+                    <i class='bx bx-receipt'></i>
+                    <span>Issues & Returns</span>
+                </a>
+            </nav>
+
+            <div class="user-profile">
+                <img src="https://ui-avatars.com/api/?name=Admin&background=6b46c1&color=fff" alt="Admin Profile">
+                <div class="user-info">
+                    <h4>Admin User</h4>
+                    <p>Librarian</p>
+                </div>
+            </div>
+            <div class="roll-number-badge">
+                <i class='bx bx-id-card'></i>
+                <span>Roll No: 24051233</span>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="search-bar">
+                    <i class='bx bx-search'></i>
+                    <input type="text" id="globalSearch" placeholder="Search books, members, issues...">
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" id="notifBtn"><i class='bx bx-bell'></i><span class="badge" id="notifBadge">0</span></button>
+                    <button class="btn primary-btn" id="addBookBtn"><i class='bx bx-plus'></i> Add Book</button>
+                </div>
+            </header>
+
+            <div class="content-area">
+
+                <!-- ==================== DASHBOARD SECTION ==================== -->
+                <section class="page-section active" id="section-dashboard">
+                    <div class="stats-grid">
+                        <div class="stat-card glass-panel inner" id="stat-totalBooks">
+                            <div class="stat-icon purple"><i class='bx bx-book-open'></i></div>
+                            <div class="stat-details">
+                                <h3>Total Books</h3>
+                                <p class="stat-number" data-target="0">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card glass-panel inner" id="stat-activeMembers">
+                            <div class="stat-icon blue"><i class='bx bx-user-check'></i></div>
+                            <div class="stat-details">
+                                <h3>Active Members</h3>
+                                <p class="stat-number" data-target="0">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card glass-panel inner" id="stat-issuedBooks">
+                            <div class="stat-icon orange"><i class='bx bx-book-bookmark'></i></div>
+                            <div class="stat-details">
+                                <h3>Issued Books</h3>
+                                <p class="stat-number" data-target="0">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card glass-panel inner" id="stat-overdueReturns">
+                            <div class="stat-icon red"><i class='bx bx-error-circle'></i></div>
+                            <div class="stat-details">
+                                <h3>Overdue Returns</h3>
+                                <p class="stat-number" data-target="0">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <section class="table-section glass-panel inner">
+                        <div class="section-header">
+                            <h2>Recent Activity</h2>
+                            <button class="view-all" id="viewAllBooksBtn">View All Books <i class='bx bx-chevron-right'></i></button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table" id="recentBooksTable">
+                                <thead>
+                                    <tr>
+                                        <th>Book ID</th>
+                                        <th>Title & Info</th>
+                                        <th>Author</th>
+                                        <th>Publisher</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </section>
+
+                <!-- ==================== BOOKS SECTION ==================== -->
+                <section class="page-section" id="section-books">
+                    <div class="section-title-bar">
+                        <h1 class="page-title"><i class='bx bx-book'></i> Books Catalog</h1>
+                        <button class="btn primary-btn" id="addBookBtn2"><i class='bx bx-plus'></i> Add Book</button>
+                    </div>
+                    <section class="table-section glass-panel inner">
+                        <div class="section-header">
+                            <h2>All Books</h2>
+                            <div class="table-search">
+                                <i class='bx bx-search'></i>
+                                <input type="text" id="bookSearchInput" placeholder="Search books...">
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table" id="allBooksTable">
+                                <thead>
+                                    <tr>
+                                        <th>Book ID</th>
+                                        <th>Title & Info</th>
+                                        <th>Author</th>
+                                        <th>Publisher</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </section>
+
+                <!-- ==================== MEMBERS SECTION ==================== -->
+                <section class="page-section" id="section-members">
+                    <div class="section-title-bar">
+                        <h1 class="page-title"><i class='bx bx-user'></i> Members Directory</h1>
+                        <button class="btn primary-btn" id="addMemberBtn"><i class='bx bx-plus'></i> Add Member</button>
+                    </div>
+                    <section class="table-section glass-panel inner">
+                        <div class="section-header">
+                            <h2>All Members</h2>
+                            <div class="table-search">
+                                <i class='bx bx-search'></i>
+                                <input type="text" id="memberSearchInput" placeholder="Search members...">
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table" id="allMembersTable">
+                                <thead>
+                                    <tr>
+                                        <th>Member ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Membership Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </section>
+
+                <!-- ==================== ISSUES SECTION ==================== -->
+                <section class="page-section" id="section-issues">
+                    <div class="section-title-bar">
+                        <h1 class="page-title"><i class='bx bx-receipt'></i> Issues & Returns</h1>
+                        <button class="btn primary-btn" id="issueBookBtn"><i class='bx bx-plus'></i> Issue Book</button>
+                    </div>
+                    <section class="table-section glass-panel inner">
+                        <div class="section-header">
+                            <h2>All Issued Books</h2>
+                            <div class="table-search">
+                                <i class='bx bx-search'></i>
+                                <input type="text" id="issueSearchInput" placeholder="Search issues...">
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table" id="allIssuesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Issue ID</th>
+                                        <th>Book Title</th>
+                                        <th>Member Name</th>
+                                        <th>Issue Date</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ==================== ADD BOOK MODAL ==================== -->
+    <div class="modal-overlay" id="addBookModal">
+        <div class="modal glass-panel">
+            <div class="modal-header">
+                <h2 id="bookModalTitle">Add New Book</h2>
+                <button class="close-btn" id="closeBookModal"><i class='bx bx-x'></i></button>
+            </div>
+            <form class="modal-form" id="bookForm">
+                <input type="hidden" id="editBookId">
+                <div class="form-group row">
+                    <div class="input-field">
+                        <label for="bookIdInput">Book ID</label>
+                        <input type="number" id="bookIdInput" placeholder="e.g. 3" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="bookCopies">Available Copies</label>
+                        <input type="number" id="bookCopies" placeholder="5" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="bookTitle">Title</label>
+                    <input type="text" id="bookTitle" placeholder="Enter book title" required>
+                </div>
+                <div class="form-group row">
+                    <div class="input-field">
+                        <label for="bookAuthor">Author</label>
+                        <input type="text" id="bookAuthor" placeholder="Author name" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="bookPublisher">Publisher</label>
+                        <input type="text" id="bookPublisher" placeholder="Publisher name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="bookYear">Year of Publication</label>
+                    <input type="number" id="bookYear" placeholder="YYYY" required>
+                </div>
+                <div id="bookFormMessage" class="form-message"></div>
+                <button type="submit" class="btn primary-btn submit-btn">Save Book</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== ADD MEMBER MODAL ==================== -->
+    <div class="modal-overlay" id="addMemberModal">
+        <div class="modal glass-panel">
+            <div class="modal-header">
+                <h2>Add New Member</h2>
+                <button class="close-btn" id="closeMemberModal"><i class='bx bx-x'></i></button>
+            </div>
+            <form class="modal-form" id="memberForm">
+                <div class="form-group row">
+                    <div class="input-field">
+                        <label for="memberIdInput">Member ID</label>
+                        <input type="number" id="memberIdInput" placeholder="e.g. 3" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="memberPhone">Phone Number</label>
+                        <input type="text" id="memberPhone" placeholder="9876543210" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="memberName">Name</label>
+                    <input type="text" id="memberName" placeholder="Enter member name" required>
+                </div>
+                <div class="form-group">
+                    <label for="memberEmail">Email</label>
+                    <input type="email" id="memberEmail" placeholder="member@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="memberDate">Membership Date</label>
+                    <input type="date" id="memberDate" required>
+                </div>
+                <div id="memberFormMessage" class="form-message"></div>
+                <button type="submit" class="btn primary-btn submit-btn">Save Member</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== ISSUE BOOK MODAL ==================== -->
+    <div class="modal-overlay" id="issueBookModal">
+        <div class="modal glass-panel">
+            <div class="modal-header">
+                <h2>Issue a Book</h2>
+                <button class="close-btn" id="closeIssueModal"><i class='bx bx-x'></i></button>
+            </div>
+            <form class="modal-form" id="issueForm">
+                <div class="form-group row">
+                    <div class="input-field">
+                        <label for="issueIdInput">Issue ID</label>
+                        <input type="number" id="issueIdInput" placeholder="e.g. 3" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="issueLibrarianId">Librarian ID</label>
+                        <input type="number" id="issueLibrarianId" placeholder="1" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="input-field">
+                        <label for="issueBookSelect">Select Book</label>
+                        <select id="issueBookSelect" required>
+                            <option value="">-- Choose Book --</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label for="issueMemberSelect">Select Member</label>
+                        <select id="issueMemberSelect" required>
+                            <option value="">-- Choose Member --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="input-field">
+                        <label for="issueDateInput">Issue Date</label>
+                        <input type="date" id="issueDateInput" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="dueDateInput">Due Date</label>
+                        <input type="date" id="dueDateInput" required>
+                    </div>
+                </div>
+                <div id="issueFormMessage" class="form-message"></div>
+                <button type="submit" class="btn primary-btn submit-btn">Issue Book</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
